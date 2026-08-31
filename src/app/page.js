@@ -242,7 +242,7 @@ export default function Home() {
       </section>
 
       {/* ---------------- STATS ---------------- */}
-      <section className="border-y border-zinc-200 dark:border-white/10">
+      {/* <section className="border-y border-zinc-200 dark:border-white/10">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-10 text-center sm:grid-cols-4">
           {[
             ['6', 'Roadmap tracks'],
@@ -263,7 +263,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ---------------- ROADMAPS ---------------- */}
       {/* <section id="roadmaps" className="mx-auto max-w-6xl px-6 py-24">
@@ -389,24 +389,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------- CTA ---------------- */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="flex flex-col items-center gap-6 rounded-3xl bg-zinc-900 px-8 py-16 text-center dark:bg-black/40 dark:ring-1 dark:ring-white/10">
-          <h2
-            className="max-w-md text-2xl font-semibold text-white sm:text-3xl"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            Ready to stop losing your notes in fifty tabs?
-          </h2>
-          <a
-            href="#notes"
-            className="rounded-full bg-[#3654FF] px-6 py-3 text-sm font-semibold text-white hover:bg-[#2946e0] transition-colors"
-          >
-            Browse Notes
-          </a>
-        </div>
-      </section>
-
       {/* ---------------- FOOTER ---------------- */}
       <footer className="border-t border-zinc-200 dark:border-white/10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-zinc-500 dark:text-zinc-500 sm:flex-row">
@@ -414,7 +396,7 @@ export default function Home() {
             <LogoMark small />
             <span style={{ fontFamily: 'var(--font-display)' }}>BuildAI</span>
           </div>
-          <p style={{ fontFamily: 'var(--font-mono)' }}>© {new Date().getFullYear()} Waypoint. All roadmaps, one place.</p>
+          <p style={{ fontFamily: 'var(--font-mono)' }}>© {new Date().getFullYear()} BuildAI. All roadmaps, one place.</p>
         </div>
       </footer>
     </div>
