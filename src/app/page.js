@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
+import { useTheme } from './ThemeProvider';
 
 /* ---------- Fonts ----------
    Space Grotesk = display / headlines (geometric, technical)
@@ -37,54 +37,55 @@ const waypoints = [
   'Deployment',
 ];
 
-const roadmapTracks = [
-  {
-    title: 'LLM Engineer',
-    desc: 'Transformers, prompting, RAG, and fine-tuning — the core stack for building with large language models.',
-    nodes: 14,
-    tag: 'Most popular',
-  },
-  {
-    title: 'ML Engineer',
-    desc: 'Classical ML, feature engineering, model training, and evaluation, from first principles to production.',
-    nodes: 18,
-  },
-  {
-    title: 'MLOps Engineer',
-    desc: 'CI/CD for models, monitoring, versioning, and infra for shipping ML reliably at scale.',
-    nodes: 11,
-  },
-  {
-    title: 'AI Agent Developer',
-    desc: 'Tool use, planning, memory, and multi-agent orchestration for autonomous systems.',
-    nodes: 9,
-    tag: 'New',
-  },
-  {
-    title: 'Prompt Engineer',
-    desc: 'Structured prompting, evaluation harnesses, and techniques that actually move the needle.',
-    nodes: 8,
-  },
-  {
-    title: 'Data Engineer for AI',
-    desc: 'Pipelines, vector stores, and data quality practices that feed every model above.',
-    nodes: 10,
-  },
-];
+// const roadmapTracks = [
+//   {
+//     title: 'LLM Engineer',
+//     desc: 'Transformers, prompting, RAG, and fine-tuning — the core stack for building with large language models.',
+//     nodes: 14,
+//     tag: 'Most popular',
+//   },
+//   {
+//     title: 'ML Engineer',
+//     desc: 'Classical ML, feature engineering, model training, and evaluation, from first principles to production.',
+//     nodes: 18,
+//   },
+//   {
+//     title: 'MLOps Engineer',
+//     desc: 'CI/CD for models, monitoring, versioning, and infra for shipping ML reliably at scale.',
+//     nodes: 11,
+//   },
+//   {
+//     title: 'AI Agent Developer',
+//     desc: 'Tool use, planning, memory, and multi-agent orchestration for autonomous systems.',
+//     nodes: 9,
+//     tag: 'New',
+//   },
+//   {
+//     title: 'Prompt Engineer',
+//     desc: 'Structured prompting, evaluation harnesses, and techniques that actually move the needle.',
+//     nodes: 8,
+//   },
+//   {
+//     title: 'Data Engineer for AI',
+//     desc: 'Pipelines, vector stores, and data quality practices that feed every model above.',
+//     nodes: 10,
+//   },
+// ];
 
 const noteTopics = [
-  'Transformers',
-  'RAG Systems',
-  'Vector Databases',
-  'Fine-tuning',
-  'Prompt Techniques',
-  'Evaluation & Metrics',
-  'AI Agents',
-  'Model Deployment',
-  'Tokenization',
-  'Embeddings',
-  'Context Windows',
-  'Model Serving',
+  { label: 'Python', slug: 'python' },
+  // { label: 'Transformers', slug: 'transformers' },
+  // { label: 'RAG Systems', slug: 'rag-systems' },
+  // { label: 'Vector Databases', slug: 'vector-databases' },
+  // { label: 'Fine-tuning', slug: 'fine-tuning' },
+  // { label: 'Prompt Techniques', slug: 'prompt-techniques' },
+  // { label: 'Evaluation & Metrics', slug: 'evaluation-metrics' },
+  // { label: 'AI Agents', slug: 'ai-agents' },
+  // { label: 'Model Deployment', slug: 'model-deployment' },
+  // { label: 'Tokenization', slug: 'tokenization' },
+  // { label: 'Embeddings', slug: 'embeddings' },
+  // { label: 'Context Windows', slug: 'context-windows' },
+  // { label: 'Model Serving', slug: 'model-serving' },
 ];
 
 const features = [
@@ -103,60 +104,44 @@ const features = [
 ];
 
 export default function Home() {
-  const [dark, setDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem('waypoint-theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = stored ? stored === 'dark' : prefersDark;
-    setDark(isDark);
-    document.documentElement.classList.toggle('dark', isDark);
-    setMounted(true);
-  }, []);
-
-  const toggleTheme = () => {
-    const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle('dark', next);
-    window.localStorage.setItem('waypoint-theme', next ? 'dark' : 'light');
-  };
+  const { theme, toggleTheme, mounted } = useTheme();
+  const dark = theme === 'dark';
 
   return (
     <div
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-white text-slate-900 antialiased dark:bg-[#0A0E1A] dark:text-slate-100 transition-colors duration-300`}
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-white text-zinc-900 antialiased dark:bg-zinc-900 dark:text-zinc-100 transition-colors duration-300`}
       style={{ fontFamily: 'var(--font-body)', visibility: mounted ? 'visible' : 'hidden' }}
     >
       {/* ---------------- NAV ---------------- */}
-      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-[#0A0E1A]/80">
+      <header className="sticky top-0 z-50  bg-white/80 backdrop-blur dark:border-white/10 dark:bg-zinc-900/80">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center gap-2.5">
-            <LogoMark />
+            
             <span
               className="text-lg font-semibold tracking-tight"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              Waypoint
+              BuildAI
             </span>
           </a>
 
-          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-300 md:flex">
-            <a href="#roadmaps" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+          {/* <nav className="hidden items-center gap-8 text-sm font-medium text-zinc-600 dark:text-zinc-300 md:flex">
+            <a href="#roadmaps" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
               Roadmaps
             </a>
-            <a href="#notes" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+            <a href="#notes" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
               Notes
             </a>
-            <a href="#why" className="hover:text-slate-900 dark:hover:text-white transition-colors">
+            <a href="#why" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
               Why Waypoint
             </a>
-          </nav>
+          </nav> */}
 
           <div className="flex items-center gap-3">
             <button
               onClick={toggleTheme}
               aria-label="Toggle color theme"
-              className="grid h-9 w-9 place-items-center rounded-full border border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-900 dark:border-white/15 dark:text-slate-300 dark:hover:border-white/30 dark:hover:text-white transition-colors"
+              className="grid h-9 w-9 place-items-center rounded-full border border-zinc-200 text-zinc-500 hover:border-zinc-300 hover:text-zinc-900 dark:border-white/15 dark:text-zinc-300 dark:hover:border-white/30 dark:hover:text-white transition-colors"
             >
               {dark ? <SunIcon /> : <MoonIcon />}
             </button>
@@ -174,79 +159,90 @@ export default function Home() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 -top-40 h-96 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(54,84,255,0.14),transparent)] dark:bg-[radial-gradient(60%_60%_at_50%_0%,rgba(124,147,255,0.18),transparent)]"
+          className="pointer-events-none absolute inset-x-0 -top-40 h-96 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(54,84,255,0.12),transparent)] dark:bg-[radial-gradient(60%_60%_at_50%_0%,rgba(124,147,255,0.14),transparent)]"
         />
 
-        <div className="relative mx-auto max-w-6xl px-6 pt-20 pb-10 text-center sm:pt-28">
-          <span
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-1 text-xs font-medium uppercase tracking-widest text-slate-500 dark:border-white/15 dark:text-slate-400"
-            style={{ fontFamily: 'var(--font-mono)' }}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#FFB238]" />
-            AI engineering, mapped
-          </span>
+        <div className="relative mx-auto max-w-6xl px-6 pt-10 pb-10 text-center sm:pt-28">
 
           <h1
-            className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl"
+            className="mx-auto  max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            Stop hunting for notes.
-            <br className="hidden sm:block" /> Start following the map.
+            Stop hunting for <span className='text-[#3654FF]'>notes.</span>
+            <br className="hidden sm:block" /> Start following the <span className='text-[#3654FF]'>map.</span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-slate-600 dark:text-slate-400 sm:text-lg">
-            Every roadmap, note, and resource for AI engineering — LLMs, RAG, fine-tuning,
-            agents, deployment — organized in one place instead of scattered across fifty
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-lg">
+            Every roadmap, note, and resource for AI engineering - LLMs, RAG, fine-tuning,
+            agents, deployment - organized in one place instead of scattered across fifty
             tabs and half-finished bookmarks.
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a
+            {/* <a
               href="#roadmaps"
               className="w-full rounded-full bg-[#3654FF] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-[#3654FF]/30 hover:bg-[#2946e0] transition-colors sm:w-auto"
             >
               Explore roadmaps
-            </a>
+            </a> */}
             <a
               href="#notes"
-              className="w-full rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 hover:border-slate-400 hover:text-slate-900 transition-colors dark:border-white/20 dark:text-slate-300 dark:hover:border-white/40 dark:hover:text-white sm:w-auto"
+              className="w-full rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 transition-colors dark:border-white/20 dark:text-zinc-300 dark:hover:border-white/40 dark:hover:text-white sm:w-auto"
             >
               Browse notes
             </a>
           </div>
         </div>
 
-        {/* ---- Signature: the winding roadmap ---- */}
+        {/* ---- Signature: the roadmap ----
+             Desktop/tablet: single-line horizontal path, wraps to a
+             second row instead of scrolling if it doesn't fit.
+             Mobile: vertical timeline down the left edge. */}
         <div className="relative mx-auto mt-16 max-w-5xl px-6 pb-24">
-          <div className="overflow-x-auto">
-            <div className="flex min-w-[720px] items-end justify-between gap-2 px-4">
-              {waypoints.map((label, i) => (
-                <div
-                  key={label}
-                  className="flex flex-1 flex-col items-center"
-                  style={{ transform: `translateY(${i % 2 === 0 ? '0px' : '22px'})` }}
-                >
-                  <div className="relative flex w-full items-center">
-                    {i !== 0 && (
-                      <span className="absolute right-1/2 h-px w-full border-t border-dashed border-slate-300 dark:border-white/20" />
-                    )}
-                    <span className="relative mx-auto grid h-3 w-3 place-items-center rounded-full bg-[#FFB238] ring-4 ring-[#FFB238]/20" />
-                  </div>
-                  <span
-                    className="mt-3 max-w-[6.5rem] text-center text-xs font-medium leading-snug text-slate-600 dark:text-slate-400"
-                    style={{ fontFamily: 'var(--font-mono)' }}
-                  >
-                    {label}
-                  </span>
+          {/* Desktop / tablet */}
+          <div className="hidden sm:flex flex-wrap items-end justify-center gap-x-3 gap-y-12">
+            {waypoints.map((label, i) => (
+              <div
+                key={label}
+                className="flex flex-col items-center"
+                style={{ transform: `translateY(${i % 2 === 0 ? '0px' : '18px'})`, minWidth: '7rem' }}
+              >
+                <div className="relative flex w-full items-center">
+                  {i !== 0 && (
+                    <span className="absolute right-1/2 h-px w-full border-t border-dashed border-zinc-300 dark:border-zinc-700" />
+                  )}
+                  <span className="relative mx-auto grid h-3 w-3 place-items-center rounded-full bg-[#FFB238] ring-4 ring-[#FFB238]/20" />
                 </div>
-              ))}
-            </div>
+                <span
+                  className="mt-3 max-w-[7rem] text-center text-xs font-medium leading-snug text-zinc-600 dark:text-zinc-400"
+                  style={{ fontFamily: 'var(--font-mono)' }}
+                >
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile */}
+          <div className="relative flex flex-col gap-6 pl-6 sm:hidden">
+            <span className="absolute left-[7px] top-2 bottom-2 border-l border-dashed border-zinc-300 dark:border-zinc-700" />
+            {waypoints.map((label) => (
+              <div key={label} className="relative flex items-center gap-3">
+                <span className="absolute -left-6 h-3 w-3 rounded-full bg-[#FFB238] ring-4 ring-[#FFB238]/20" />
+                <span
+                  className="text-sm font-medium text-zinc-600 dark:text-zinc-400"
+                  style={{ fontFamily: 'var(--font-mono)' }}
+                >
+                  {label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ---------------- STATS ---------------- */}
-      <section className="border-y border-slate-200 dark:border-white/10">
+      <section className="border-y border-zinc-200 dark:border-white/10">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-10 text-center sm:grid-cols-4">
           {[
             ['6', 'Roadmap tracks'],
@@ -261,7 +257,7 @@ export default function Home() {
               >
                 {value}
               </div>
-              <div className="mt-1 text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
+              <div className="mt-1 text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
                 {label}
               </div>
             </div>
@@ -270,7 +266,7 @@ export default function Home() {
       </section>
 
       {/* ---------------- ROADMAPS ---------------- */}
-      <section id="roadmaps" className="mx-auto max-w-6xl px-6 py-24">
+      {/* <section id="roadmaps" className="mx-auto max-w-6xl px-6 py-24">
         <div className="mb-12 max-w-xl">
           <span
             className="text-xs font-medium uppercase tracking-widest text-[#3654FF] dark:text-[#7C93FF]"
@@ -284,7 +280,7 @@ export default function Home() {
           >
             Pick your path
           </h2>
-          <p className="mt-3 text-slate-600 dark:text-slate-400">
+          <p className="mt-3 text-zinc-600 dark:text-zinc-400">
             Six focused tracks covering the roles inside AI engineering. Each one breaks
             down into ordered, linked notes so you always know what's next.
           </p>
@@ -295,7 +291,7 @@ export default function Home() {
             <a
               key={track.title}
               href="#"
-              className="group relative flex flex-col rounded-2xl border border-slate-200 bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#3654FF]/40 hover:shadow-lg hover:shadow-[#3654FF]/5 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#7C93FF]/40"
+              className="group relative flex flex-col rounded-2xl border border-zinc-200 bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#3654FF]/40 hover:shadow-lg hover:shadow-[#3654FF]/5 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#7C93FF]/40"
             >
               {track.tag && (
                 <span
@@ -311,10 +307,10 @@ export default function Home() {
               >
                 {track.title}
               </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                 {track.desc}
               </p>
-              <div className="mt-5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-500">
+              <div className="mt-5 flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-500">
                 <span style={{ fontFamily: 'var(--font-mono)' }}>{track.nodes} notes</span>
                 <span className="inline-flex items-center gap-1 font-medium text-[#3654FF] dark:text-[#7C93FF]">
                   View roadmap
@@ -324,10 +320,10 @@ export default function Home() {
             </a>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* ---------------- NOTES ---------------- */}
-      <section id="notes" className="border-y border-slate-200 bg-slate-50/70 dark:border-white/10 dark:bg-white/[0.02]">
+      <section id="notes" className="border-y border-zinc-200 bg-zinc-50 dark:border-white/10 dark:bg-white/[0.02]">
         <div className="mx-auto max-w-6xl px-6 py-24">
           <div className="mb-12 max-w-xl">
             <span
@@ -342,21 +338,17 @@ export default function Home() {
             >
               Notes that don't waste your time
             </h2>
-            <p className="mt-3 text-slate-600 dark:text-slate-400">
+            <p className="mt-3 text-zinc-600 dark:text-zinc-400">
               Short, dense, and linked back to the roadmap step they belong to. No fluff,
               no filler intros.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            {noteTopics.map((topic) => (
-              <a
-                key={topic}
-                href="#"
-                className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:border-[#3654FF]/40 hover:text-[#3654FF] transition-colors dark:border-white/10 dark:bg-transparent dark:text-slate-300 dark:hover:border-[#7C93FF]/40 dark:hover:text-[#7C93FF]"
-              >
-                {topic}
-              </a>
+            {noteTopics.map(({ label, slug }) => (
+             <a key={slug}
+              href={`/${slug}`} className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:border-[#3654FF]/40 hover:text-[#3654FF] transition-colors dark:border-white/10 dark:bg-transparent dark:text-zinc-300 dark:hover:border-[#7C93FF]/40 dark:hover:text-[#7C93FF]">
+              {label}</a>
             ))}
           </div>
         </div>
@@ -369,7 +361,7 @@ export default function Home() {
             className="text-xs font-medium uppercase tracking-widest text-[#3654FF] dark:text-[#7C93FF]"
             style={{ fontFamily: 'var(--font-mono)' }}
           >
-            Why Waypoint
+            Why BuildAI
           </span>
           <h2
             className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl"
@@ -389,7 +381,7 @@ export default function Home() {
               >
                 {f.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                 {f.desc}
               </p>
             </div>
@@ -399,7 +391,7 @@ export default function Home() {
 
       {/* ---------------- CTA ---------------- */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="flex flex-col items-center gap-6 rounded-3xl bg-[#0A0E1A] px-8 py-16 text-center dark:bg-white/[0.03] dark:ring-1 dark:ring-white/10">
+        <div className="flex flex-col items-center gap-6 rounded-3xl bg-zinc-900 px-8 py-16 text-center dark:bg-black/40 dark:ring-1 dark:ring-white/10">
           <h2
             className="max-w-md text-2xl font-semibold text-white sm:text-3xl"
             style={{ fontFamily: 'var(--font-display)' }}
@@ -407,20 +399,20 @@ export default function Home() {
             Ready to stop losing your notes in fifty tabs?
           </h2>
           <a
-            href="#roadmaps"
+            href="#notes"
             className="rounded-full bg-[#3654FF] px-6 py-3 text-sm font-semibold text-white hover:bg-[#2946e0] transition-colors"
           >
-            Start exploring
+            Browse Notes
           </a>
         </div>
       </section>
 
       {/* ---------------- FOOTER ---------------- */}
-      <footer className="border-t border-slate-200 dark:border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-slate-500 dark:text-slate-500 sm:flex-row">
+      <footer className="border-t border-zinc-200 dark:border-white/10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-zinc-500 dark:text-zinc-500 sm:flex-row">
           <div className="flex items-center gap-2">
             <LogoMark small />
-            <span style={{ fontFamily: 'var(--font-display)' }}>Waypoint</span>
+            <span style={{ fontFamily: 'var(--font-display)' }}>BuildAI</span>
           </div>
           <p style={{ fontFamily: 'var(--font-mono)' }}>© {new Date().getFullYear()} Waypoint. All roadmaps, one place.</p>
         </div>

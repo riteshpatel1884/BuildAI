@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
+/*
+  Tailwind v4 has no tailwind.config.js "darkMode" option by default.
+  This line is what makes `dark:` utilities respond to a `.dark` class
+  on <html> instead of only the OS color scheme. Without it, every
+  dark: class in page.js is silently inert — which is exactly the bug
+  you were seeing.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Theme tokens.
+  Light mode = clean white. Dark mode = zinc-black (neutral, lighter than
+  pure black — not blue-tinted navy).
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-bg: #ffffff;
+  --color-bg-elevated: #f4f4f5;
+  --color-text: #18181b;
+  --color-text-muted: #71717a;
+  --color-border: #e4e4e7;
+  --color-brand: #3654ff;
+  --color-brand-strong: #2946e0;
+  --color-brand-soft: #7c93ff;
+  --color-beacon: #ffb238;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --color-bg: #18181b;
+  --color-bg-elevated: #202023;
+  --color-text: #f4f4f5;
+  --color-text-muted: #a1a1aa;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-brand: #3654ff;
+  --color-brand-strong: #5170ff;
+  --color-brand-soft: #7c93ff;
+  --color-beacon: #ffb238;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
