@@ -2,6 +2,7 @@
 
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
 import { useTheme } from './ThemeProvider';
+import { Navbar } from './components/Navbar';
 
 /* ---------- Fonts ----------
    Space Grotesk = display / headlines (geometric, technical)
@@ -114,45 +115,7 @@ export default function Home() {
     >
       {/* ---------------- NAV ---------------- */}
       <header className="sticky top-0 z-50  bg-white/80 backdrop-blur dark:border-white/10 dark:bg-zinc-900/80">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#" className="flex items-center gap-2.5">
             
-            <span
-              className="text-lg font-semibold tracking-tight"
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              BuildAI
-            </span>
-          </a>
-
-          {/* <nav className="hidden items-center gap-8 text-sm font-medium text-zinc-600 dark:text-zinc-300 md:flex">
-            <a href="#roadmaps" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
-              Roadmaps
-            </a>
-            <a href="#notes" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
-              Notes
-            </a>
-            <a href="#why" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
-              Why Waypoint
-            </a>
-          </nav> */}
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle color theme"
-              className="grid h-9 w-9 place-items-center rounded-full border border-zinc-200 text-zinc-500 hover:border-zinc-300 hover:text-zinc-900 dark:border-white/15 dark:text-zinc-300 dark:hover:border-white/30 dark:hover:text-white transition-colors"
-            >
-              {dark ? <SunIcon /> : <MoonIcon />}
-            </button>
-            <a
-              href="#roadmaps"
-              className="hidden rounded-full bg-[#3654FF] px-4 py-2 text-sm font-semibold text-white hover:bg-[#2946e0] transition-colors sm:inline-block"
-            >
-              Start exploring
-            </a>
-          </div>
-        </div>
       </header>
 
       {/* ---------------- HERO ---------------- */}

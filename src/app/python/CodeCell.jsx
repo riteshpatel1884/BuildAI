@@ -1,8 +1,36 @@
 'use client';
 
+import { tokenizeCode } from './lib/pythonTokenizer'; // adjust path to where you save it
+
+// VS Code "Dark+" token colors — deliberately separate from the site's
+// --color-* theme vars, since a code editor stays dark in both light and
+// dark mode, same as VS Code itself.
+const TOKEN_COLORS = {
+  comment: '#6A9955',   // green, italic
+  string: '#CE9178',    // orange
+  number: '#B5CEA8',    // soft green
+  keyword: '#569CD6',   // blue
+  variable: '#9CDCFE',  // light blue
+  func: '#DCDCAA',      // yellow
+  operator: '#D4D4D4',  // near-white
+  punctuation: '#D4D4D4',
+  plain: '#D4D4D4',
+};
+
+function Token({ text, type }) {
+  return (
+    <span
+      style={{
+        color: TOKEN_COLORS[type] ?? TOKEN_COLORS.plain,
+        fontStyle: type === 'comment' ? 'italic' : 'normal',
+      }}
+    >
+      {text}
+    </span>
+  );
+}
+
 export function MarkdownCell({ text }) {
-  // Light inline-code support ( `like this` ) to match notebook markdown cells,
-  // without pulling in a full markdown renderer.
   const parts = text.split(/(`[^`]+`)/g);
   return (
     <p className="mb-4 text-[15px] leading-relaxed text-zinc-700 dark:text-zinc-300">
@@ -24,30 +52,45 @@ export function MarkdownCell({ text }) {
 }
 
 export function CodeCell({ code, output, count }) {
+  const lines = tokenizeCode(code);
+
   return (
     <div className="mb-5 overflow-hidden rounded-xl border border-zinc-200 dark:border-white/10">
-      <div className="flex items-start gap-3 bg-zinc-50 px-4 py-3.5 dark:bg-white/[0.03]">
+      <div className="flex items-start gap-3 bg-[#1e1e1e] px-4 py-3.5">
         <span
-          className="mt-0.5 shrink-0 text-xs text-zinc-400 dark:text-zinc-500"
+          className="mt-0.5 shrink-0 text-xs text-[#6e7681]"
           style={{ fontFamily: 'var(--font-mono)' }}
         >
-          In [{count}]:
+          Input:
         </span>
-        <pre className="min-w-0 flex-1 overflow-x-auto text-[13px] leading-relaxed text-zinc-800 dark:text-zinc-200">
-          <code style={{ fontFamily: 'var(--font-mono)' }}>{code}</code>
+        <pre className="min-w-0 flex-1 overflow-x-auto text-[13px] leading-relaxed">
+          <code style={{ fontFamily: 'var(--font-mono)' }}>
+            {lines.map((line, i) => (
+              <div key={i} className="whitespace-pre">
+                {line.blank
+                  ? '\u00A0'
+                  : line.tokens.map((tok, j) => (
+                      <Token key={j} text={tok.text} type={tok.type} />
+                    ))}
+              </div>
+            ))}
+          </code>
         </pre>
       </div>
+
       {output && (
-        <div className="flex items-start gap-3 border-t border-zinc-200 bg-white px-4 py-3.5 dark:border-white/10 dark:bg-zinc-900">
-          <span
-            className="mt-0.5 shrink-0 text-xs text-zinc-300 dark:text-zinc-600"
-            style={{ fontFamily: 'var(--font-mono)' }}
-          >
-            Out:
-          </span>
-          <pre className="min-w-0 flex-1 overflow-x-auto text-[13px] leading-relaxed text-zinc-500 dark:text-zinc-400">
-            <code style={{ fontFamily: 'var(--font-mono)' }}>{output}</code>
-          </pre>
+        <div className="border-t border-[#3c3c3c] bg-[#181818] px-4 py-3.5">
+          <div className="flex items-start gap-3">
+            <span
+              className="mt-0.5 shrink-0 text-xs text-[#6e7681]"
+              style={{ fontFamily: 'var(--font-mono)' }}
+            >
+              Output:
+            </span>
+            <pre className="min-w-0 flex-1 overflow-x-auto text-[13px] leading-relaxed text-[#d4d4d4]">
+              <code style={{ fontFamily: 'var(--font-mono)' }}>{output}</code>
+            </pre>
+          </div>
         </div>
       )}
     </div>
