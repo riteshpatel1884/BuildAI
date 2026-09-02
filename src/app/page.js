@@ -1,14 +1,11 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
 import { useTheme } from './ThemeProvider';
 import { Navbar } from './components/Navbar';
 
-/* ---------- Fonts ----------
-   Space Grotesk = display / headlines (geometric, technical)
-   Inter         = body copy
-   JetBrains Mono = labels, tags, stats — reads like config/code
------------------------------- */
+/* ---------- Fonts ---------- */
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   weight: ['500', '600', '700'],
@@ -38,46 +35,11 @@ const waypoints = [
   'Deployment',
 ];
 
-// const roadmapTracks = [
-//   {
-//     title: 'LLM Engineer',
-//     desc: 'Transformers, prompting, RAG, and fine-tuning — the core stack for building with large language models.',
-//     nodes: 14,
-//     tag: 'Most popular',
-//   },
-//   {
-//     title: 'ML Engineer',
-//     desc: 'Classical ML, feature engineering, model training, and evaluation, from first principles to production.',
-//     nodes: 18,
-//   },
-//   {
-//     title: 'MLOps Engineer',
-//     desc: 'CI/CD for models, monitoring, versioning, and infra for shipping ML reliably at scale.',
-//     nodes: 11,
-//   },
-//   {
-//     title: 'AI Agent Developer',
-//     desc: 'Tool use, planning, memory, and multi-agent orchestration for autonomous systems.',
-//     nodes: 9,
-//     tag: 'New',
-//   },
-//   {
-//     title: 'Prompt Engineer',
-//     desc: 'Structured prompting, evaluation harnesses, and techniques that actually move the needle.',
-//     nodes: 8,
-//   },
-//   {
-//     title: 'Data Engineer for AI',
-//     desc: 'Pipelines, vector stores, and data quality practices that feed every model above.',
-//     nodes: 10,
-//   },
-// ];
-
 const noteTopics = [
   { label: 'Python', slug: 'python' },
   { label: 'Mathematics', slug: 'mathematics', comingSoon: true },
   { label: 'Machine Learning', slug: 'machine-learning', comingSoon: true },
-   { label: 'pyTorch', slug: 'pytorch', comingSoon: true },
+  { label: 'pyTorch', slug: 'pytorch', comingSoon: true },
   { label: 'Deep Learning', slug: 'deep-learning', comingSoon: true },
   { label: 'Transformers', slug: 'transformers', comingSoon: true },
   { label: 'LLM Fundamentals', slug: 'llm-fundamentals', comingSoon: true },
@@ -96,7 +58,6 @@ const noteTopics = [
   { label: 'Reliability', slug: 'reliability', comingSoon: true },
   { label: 'LLM Gateways', slug: 'llm-gateways', comingSoon: true },
   { label: 'MLOps / LLMOps', slug: 'mlops-llmops', comingSoon: true },
-
 ];
 
 const features = [
@@ -114,9 +75,95 @@ const features = [
   },
 ];
 
+/* ---------- Desktop-nudge modal (only ever opened on mobile) ---------- */
+function TopicModal({ topic, onClose, onContinue }) {
+  useEffect(() => {
+    if (!topic) return; // don't touch scroll/listeners when the modal isn't open
+
+    function handleKey(e) {
+      if (e.key === 'Escape') onClose();
+    }
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [topic, onClose]);
+
+  if (!topic) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-6"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="w-full max-w-sm rounded-2xl border border-zinc-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-zinc-900"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-[#3654FF]/10">
+          <DesktopIcon />
+        </div>
+
+        <h3
+          className="mt-4 text-center text-lg font-semibold text-zinc-900 dark:text-zinc-100"
+          style={{ fontFamily: 'var(--font-display)' }}
+        >
+          Best viewed on desktop
+        </h3>
+
+        <p className="mt-2 text-center text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+          <span className="font-medium text-[#3654FF] dark:text-[#7C93FF]">{topic.label}</span> notes
+          include code blocks, diagrams, and side-by-side references that read a lot better on a
+          larger screen.
+        </p>
+
+        <div className="mt-6 flex flex-col gap-2">
+          <button
+            onClick={() => onContinue(topic.slug)}
+            className="w-full rounded-full bg-[#3654FF] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#2946e0]"
+          >
+            Continue anyway
+          </button>
+          <button
+            onClick={onClose}
+            className="w-full rounded-full border border-zinc-300 px-4 py-2.5 text-sm font-semibold text-zinc-700 transition-colors hover:border-zinc-400 dark:border-white/20 dark:text-zinc-300 dark:hover:border-white/40"
+          >
+            Stay here
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Below this width counts as "mobile/tablet" for the popup nudge */
+const MOBILE_BREAKPOINT = 1024;
+
 export default function Home() {
   const { theme, toggleTheme, mounted } = useTheme();
   const dark = theme === 'dark';
+  const [activeTopic, setActiveTopic] = useState(null);
+
+  function handleTopicClick(topic) {
+    const isMobile =
+      typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT;
+
+    if (isMobile) {
+      setActiveTopic(topic);
+    } else {
+      // Desktop: skip the popup entirely, go straight to the page
+      window.location.href = `/${topic.slug}`;
+    }
+  }
+
+  function handleContinue(slug) {
+    window.location.href = `/${slug}`;
+  }
 
   return (
     <div
@@ -124,9 +171,7 @@ export default function Home() {
       style={{ fontFamily: 'var(--font-body)', visibility: mounted ? 'visible' : 'hidden' }}
     >
       {/* ---------------- NAV ---------------- */}
-      <header className="sticky top-0 z-50  bg-white/80 backdrop-blur dark:border-white/10 dark:bg-zinc-900/80">
-            
-      </header>
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-zinc-900/80"></header>
 
       {/* ---------------- HERO ---------------- */}
       <section className="relative overflow-hidden">
@@ -136,13 +181,12 @@ export default function Home() {
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pt-10 pb-10 text-center sm:pt-28">
-
           <h1
-            className="mx-auto  max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl"
+            className="mx-auto max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            Stop hunting for <span className='text-[#3654FF]'>notes.</span>
-            <br className="hidden sm:block" /> Start following the <span className='text-[#3654FF]'>map.</span>
+            Stop hunting for <span className="text-[#3654FF]">notes.</span>
+            <br className="hidden sm:block" /> Start following the <span className="text-[#3654FF]">map.</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-lg">
@@ -152,12 +196,6 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            {/* 
-              href="#roadmaps"
-              className="w-full rounded-full bg-[#3654FF] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-[#3654FF]/30 hover:bg-[#2946e0] transition-colors sm:w-auto"
-            >
-              Explore roadmaps
-            </a> */}
             
             <a  href="#notes"
               className="w-full rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 transition-colors dark:border-white/20 dark:text-zinc-300 dark:hover:border-white/40 dark:hover:text-white sm:w-auto"
@@ -167,10 +205,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ---- Signature: the roadmap ----
-             Desktop/tablet: single-line horizontal path, wraps to a
-             second row instead of scrolling if it doesn't fit.
-             Mobile: vertical timeline down the left edge. */}
         <div className="relative mx-auto mt-16 max-w-5xl px-6 pb-24">
           {/* Desktop / tablet */}
           <div className="hidden sm:flex flex-wrap items-end justify-center gap-x-3 gap-y-12">
@@ -214,87 +248,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------- STATS ---------------- */}
-      {/* <section className="border-y border-zinc-200 dark:border-white/10">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 py-10 text-center sm:grid-cols-4">
-          {[
-            ['6', 'Roadmap tracks'],
-            ['340+', 'Curated notes'],
-            ['60+', 'Reference resources'],
-            ['Weekly', 'Content updates'],
-          ].map(([value, label]) => (
-            <div key={label}>
-              <div
-                className="text-2xl font-semibold text-[#3654FF] dark:text-[#7C93FF] sm:text-3xl"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                {value}
-              </div>
-              <div className="mt-1 text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                {label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section> */}
-
-      {/* ---------------- ROADMAPS ---------------- */}
-      {/* <section id="roadmaps" className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-12 max-w-xl">
-          <span
-            className="text-xs font-medium uppercase tracking-widest text-[#3654FF] dark:text-[#7C93FF]"
-            style={{ fontFamily: 'var(--font-mono)' }}
-          >
-            Roadmaps
-          </span>
-          <h2
-            className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            Pick your path
-          </h2>
-          <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-            Six focused tracks covering the roles inside AI engineering. Each one breaks
-            down into ordered, linked notes so you always know what's next.
-          </p>
-        </div>
-
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {roadmapTracks.map((track) => (
-            
-              key={track.title}
-              href="#"
-              className="group relative flex flex-col rounded-2xl border border-zinc-200 bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#3654FF]/40 hover:shadow-lg hover:shadow-[#3654FF]/5 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#7C93FF]/40"
-            >
-              {track.tag && (
-                <span
-                  className="absolute right-6 top-6 rounded-full bg-[#FFB238]/15 px-2.5 py-0.5 text-[11px] font-semibold text-[#B9711E] dark:text-[#FFB238]"
-                  style={{ fontFamily: 'var(--font-mono)' }}
-                >
-                  {track.tag}
-                </span>
-              )}
-              <h3
-                className="pr-16 text-lg font-semibold"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                {track.title}
-              </h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                {track.desc}
-              </p>
-              <div className="mt-5 flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-500">
-                <span style={{ fontFamily: 'var(--font-mono)' }}>{track.nodes} notes</span>
-                <span className="inline-flex items-center gap-1 font-medium text-[#3654FF] dark:text-[#7C93FF]">
-                  View roadmap
-                  <ArrowIcon />
-                </span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section> */}
-
       {/* ---------------- NOTES ---------------- */}
       <section id="notes" className="border-y border-zinc-200 bg-zinc-50 dark:border-white/10 dark:bg-white/[0.02]">
         <div className="mx-auto max-w-6xl px-6 py-24">
@@ -309,7 +262,7 @@ export default function Home() {
               className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              Notes that don't waste your time
+              Notes that don&apos;t waste your time
             </h2>
             <p className="mt-3 text-zinc-600 dark:text-zinc-400">
               Short, dense, and linked back to the roadmap step they belong to. No fluff,
@@ -318,30 +271,30 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-  {noteTopics.map(({ label, slug, comingSoon }) =>
-    comingSoon ? (
-      <div key={slug} className="relative inline-flex">
-        <span className="cursor-not-allowed select-none rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-400 dark:border-white/10 dark:bg-transparent dark:text-zinc-600">
-          {label}
-        </span>
-        <span
-  className="absolute -top-2 -right-2 rounded-full border border-[#3654FF]/30 bg-[#3654FF]/10 px-1.5 py-[1px] text-[8px] font-semibold uppercase tracking-wide text-[#3654FF] dark:border-[#7C93FF]/30 dark:bg-[#7C93FF]/10 dark:text-[#7C93FF]"
-  style={{ fontFamily: 'var(--font-mono)' }}
->
-  Soon
-</span>
-      </div>
-    ) : (
-      
-       <a key={slug}
-        href={`/${slug}`}
-        className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:border-[#3654FF]/40 hover:text-[#3654FF] transition-colors dark:border-white/10 dark:bg-transparent dark:text-zinc-300 dark:hover:border-[#7C93FF]/40 dark:hover:text-[#7C93FF]"
-      >
-        {label}
-      </a>
-    )
-  )}
-</div>
+            {noteTopics.map((topic) =>
+              topic.comingSoon ? (
+                <div key={topic.slug} className="relative inline-flex">
+                  <span className="cursor-not-allowed select-none rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-400 dark:border-white/10 dark:bg-transparent dark:text-zinc-600">
+                    {topic.label}
+                  </span>
+                  <span
+                    className="absolute -top-2 -right-2 rounded-full border border-[#3654FF]/30 bg-[#3654FF]/10 px-1.5 py-[1px] text-[8px] font-semibold uppercase tracking-wide text-[#3654FF] dark:border-[#7C93FF]/30 dark:bg-[#7C93FF]/10 dark:text-[#7C93FF]"
+                    style={{ fontFamily: 'var(--font-mono)' }}
+                  >
+                    Soon
+                  </span>
+                </div>
+              ) : (
+                <button
+                  key={topic.slug}
+                  onClick={() => handleTopicClick(topic)}
+                  className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:border-[#3654FF]/40 hover:text-[#3654FF] transition-colors dark:border-white/10 dark:bg-transparent dark:text-zinc-300 dark:hover:border-[#7C93FF]/40 dark:hover:text-[#7C93FF]"
+                >
+                  {topic.label}
+                </button>
+              )
+            )}
+          </div>
         </div>
       </section>
 
@@ -387,9 +340,17 @@ export default function Home() {
             <LogoMark small />
             <span style={{ fontFamily: 'var(--font-display)' }}>BuildAI</span>
           </div>
-          <p style={{ fontFamily: 'var(--font-mono)' }}>© {new Date().getFullYear()} BuildAI. All AI Engineering notes, one place.</p>
+          <p style={{ fontFamily: 'var(--font-mono)' }}>
+            © {new Date().getFullYear()} BuildAI. All AI Engineering notes, one place.
+          </p>
         </div>
       </footer>
+
+      <TopicModal
+        topic={activeTopic}
+        onClose={() => setActiveTopic(null)}
+        onContinue={handleContinue}
+      />
     </div>
   );
 }
@@ -409,6 +370,15 @@ function LogoMark({ small }) {
         strokeLinejoin="round"
       />
       <circle cx="24" cy="8" r="2.1" fill="#FFB238" />
+    </svg>
+  );
+}
+
+function DesktopIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3654FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="4" width="20" height="13" rx="2" />
+      <path d="M8 21h8M12 17v4" />
     </svg>
   );
 }
@@ -436,4 +406,4 @@ function ArrowIcon() {
       <path d="M5 12h14M13 6l6 6-6 6" />
     </svg>
   );
-}    
+}
