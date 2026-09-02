@@ -2493,9 +2493,578 @@ print(result)`,
       },
     ],
   },
-  { name: 'Exception Handling', slug: 'exception-handling', notes: [] },
-  { name: 'File Handling', slug: 'file-handling', notes: [] },
-  { name: 'OOPs', slug: 'oops', notes: [] },
+    {
+    name: 'Exception Handling',
+    slug: 'exception-handling',
+    notes: [
+      {
+        slug: 'exception-handling-basics',
+        title: 'Exception Handling',
+        cells: [
+          {
+            type: 'markdown',
+            text: 'Exceptions are runtime errors that occur while a Python program is executing. Instead of terminating the program immediately, Python creates an exception object. If the exception is not handled, the program stops and displays an error message (called a traceback).',
+          },
+          {
+            type: 'code',
+            code: `# Without Exception Handling
+
+num = 10
+print(num / 0)
+
+print("Program End")`,
+            output: `ZeroDivisionError                        Traceback (most recent call last)
+Cell In[1], line 4
+      1 # Without Exception Handling
+      2 
+      3 num = 10
+----> 4 print(num / 0)
+      5 
+      6 print("Program End")
+
+ZeroDivisionError: division by zero`,
+          },
+          {
+            type: 'code',
+            code: `# With Exception Handling
+try:
+    num = 10
+    print(num / 0)
+except ZeroDivisionError:
+    print("Cannot divide by zero.")
+
+print("Program End")`,
+            output: `Cannot divide by zero.
+Program End`,
+          },
+          { type: 'markdown', text: 'Exception Handling' },
+{
+  type: 'markdown',
+  text: '| Keyword | Purpose |\n|---|---|\n| `try` | Wrap the block of code that might cause an exception. |\n| `except` | Handle the exception if it occurs. |\n| `else` | Run code only if no exception occurs. |\n| `finally` | Run code no matter what, whether there\'s an exception or not. |\n| `raise` | Manually throw an exception. |',
+},
+          {
+            type: 'markdown',
+            text: `try:
+
+    # Code that may cause an exception
+
+except:
+
+    # Code to handle the exception`,
+          },
+          {
+            type: 'code',
+            code: `try:
+    num = 0
+    print(10 / num)
+except:
+    print("An error occurred.")`,
+            output: `An error occurred.`,
+          },
+          {
+            type: 'code',
+            code: `try:
+    file = open("data.txt", "r")
+    print(file.read())
+
+except FileNotFoundError:
+    print("File not found.")
+
+finally:
+    print("Program finished.")`,
+            output: `File not found.
+Program finished.`,
+          },
+          {
+            type: 'markdown',
+            text: '| Exception | Meaning | Example |\n|---|---|---|\n| `SyntaxError` | Invalid Python syntax | `if x > 5` |\n| `TypeError` | Wrong data type | `"5" + 2` |\n| `ValueError` | Invalid value | `int("abc")` |\n| `NameError` | Variable doesn\'t exist | `print(x)` |\n| `IndexError` | Invalid list index | `[1, 2][5]` |\n| `KeyError` | Dictionary key doesn\'t exist | `d["age"]` |\n| `ZeroDivisionError` | Division by zero | `10 / 0` |\n| `AttributeError` | Attribute/method doesn\'t exist | `"hello".append()` |\n| `FileNotFoundError` | File doesn\'t exist | `open("abc.txt")` |\n| `ModuleNotFoundError` | Module cannot be found | `import xyz` |',
+          },
+        ],
+      },
+    ],
+  },
+    {
+    name: 'File Handling',
+    slug: 'file-handling',
+    notes: [
+      {
+        slug: 'file-handling-basics',
+        title: 'File Handling',
+        cells: [
+          { type: 'markdown', text: 'Writing to a file' },
+          {
+            type: 'code',
+            code: `r = open("superman.txt", 'w')
+r.write("Hi")
+r.close()`,
+          },
+          { type: 'markdown', text: 'appending' },
+          {
+            type: 'code',
+            code: `r = open("superman.txt", 'a')
+r.write("How are you")
+r.close()`,
+          },
+          {
+  type: 'markdown',
+  text: 'After running both cells, `superman.txt` contains: `HiHow are you`',
+},
+{
+  type: 'markdown',
+  text: 'Opening in `\'w\'` mode first creates the file (or wipes it) and writes `"Hi"`. Opening the same file in `\'a\'` mode afterwards appends `"How are you"` right after it, with no space in between, since `write()` doesn\'t add one automatically.',
+},
+        ],
+      },
+    ],
+  },
+    {
+    name: 'OOPs',
+    slug: 'oops',
+    notes: [
+      {
+        slug: 'class-object',
+        title: 'Class & Object',
+        cells: [
+          { type: 'markdown', text: 'A class is a blueprint/template for creating objects.' },
+          { type: 'markdown', text: 'Class → Blueprint' },
+          { type: 'markdown', text: 'Object → Actual thing created from blueprint' },
+          { type: 'markdown', text: 'Student can be a class, while Ritesh and Rahul can be objects of that class.' },
+          {
+            type: 'code',
+            code: `class Factory:
+    name = "Ritesh" # attribute
+
+    def hello(): # method
+        print("Hi")
+
+    print("Print statement")`,
+            output: `Print statement`,
+          },
+          {
+            type: 'code',
+            code: `class Factory:
+    name = "Ritesh"
+    def hello():
+        print("from hello method: Hi")
+
+print(Factory.name)
+print(Factory.hello())
+
+# none is printed becoz because hello() method doesn't return anything.`,
+            output: `Ritesh
+from hello method: Hi
+None`,
+          },
+          {
+            type: 'code',
+            code: `class Factory:
+    name = "Ritesh"
+
+    def hello():
+        return "from hello method: Hi"
+
+print(Factory.name)
+print(Factory.hello())`,
+            output: `Ritesh
+from hello method: Hi`,
+          },
+          {
+            type: 'code',
+            code: `# Class with attributes
+# Usually, we want objects to have data.
+
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+student1 = Student("Ritesh", 21)
+
+print(student1.name)
+print(student1.age)`,
+            output: `Ritesh
+21`,
+          },
+          {
+            type: 'markdown',
+            text: '# Class variables vs instance variables\n# Instance variable: Belongs to a specific object:',
+          },
+          {
+            type: 'code',
+            code: `class Student:
+    def __init__(self, name):
+        self.name = name
+
+# Class variable: Shared by all objects
+
+class Student:
+    college = "KIET"
+
+    def __init__(self, name):
+        self.name = name`,
+          },
+          { type: 'markdown', text: 'Why use classes?' },
+          { type: 'markdown', text: 'Classes are useful when you want to group: Data + Functions that operate on that data' },
+          {
+            type: 'code',
+            code: `# For example:
+
+class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        self.balance -= amount
+
+account = BankAccount(1000)  # Python calls: __init__(account, 1000) so balance = 1000
+account.deposit(500) # This calls the deposit() method for the account object.
+# account.deposit(500)    balance = 1500
+print(account.balance)
+
+# The class keeps the account data and operations on that data together.`,
+            output: `1500`,
+          },
+        ],
+      },
+      {
+        slug: 'constructor',
+        title: 'Constructor',
+        cells: [
+          {
+            type: 'code',
+            code: `class Factory:
+    def __init__(self, material, zips, pocket):  # intitilization function
+        self.material = material
+        self.zips = zips
+        self.pocket = pocket
+
+
+obj = Factory("Leather", 3,2)
+
+print(obj.material)
+# object obj ki location self pe jayegi.`,
+            output: `Leather`,
+          },
+        ],
+      },
+      {
+        slug: 'inheritance',
+        title: 'Inheritance',
+        cells: [
+          { type: 'markdown', text: 'Inheritance means a child class can reuse the properties and methods of a parent class.' },
+          {
+            type: 'code',
+            code: `class Animal:
+    def eat(self):
+        print("Animal is eating")
+
+class Dog(Animal): # Dog inherits from Animal
+    def bark(self):
+        print("Dog is barking")
+
+dog = Dog()
+
+dog.eat()
+dog.bark()
+
+# So
+# Animal
+#   |── eat()
+#       ↓
+# Dog
+#   |── eat()     ← inherited
+#   └── bark()    ← its own`,
+            output: `Animal is eating
+Dog is barking`,
+          },
+          {
+            type: 'code',
+            code: `class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def eat(self):
+        print(f"{self.name} is eating")
+
+class Dog(Animal):
+    def bark(self):
+        print(f"{self.name} is barking")
+
+dog = Dog("Tommy")
+dog.eat()
+dog.bark()`,
+            output: `Tommy is eating
+Tommy is barking`,
+          },
+          { type: 'markdown', text: 'super() - calling the parent' },
+          {
+            type: 'code',
+            code: `# Suppose the child has its own __init__:
+
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)
+        self.breed = breed
+
+dog = Dog("Tommy", "Labrador")
+
+print(dog.name)
+print(dog.breed)
+
+# super().__init__(name) means call the parent's __init__() method.
+# Without it, self.name wouldn't be initialized by Animal.__init__().`,
+            output: `Tommy
+Labrador`,
+          },
+          { type: 'markdown', text: 'Why use inheritance?' },
+          { type: 'markdown', text: 'Imagine you have:\n\nVehicle\n\n├── car\n\n├── bike\n\n└── truck' },
+          { type: 'markdown', text: 'All vehicles might have:\n\nstart()\n\nstop()' },
+          {
+            type: 'markdown',
+            text: 'Instead of writing those methods separately in every class, put common functionality in Vehicle.',
+          },
+        ],
+      },
+      {
+        slug: 'polymorphism',
+        title: 'Polymorphism',
+        cells: [
+          { type: 'markdown', text: 'Polymorphism literally means "many forms."' },
+          {
+            type: 'markdown',
+            text: 'In Python, it means the same method/function name can behave differently depending on the object using it.',
+          },
+          { type: 'markdown', text: 'The easiest example is with inheritance and method overriding.' },
+          {
+            type: 'code',
+            code: `class Dog:
+    def sound(self):
+        print("Woof")
+
+class Cat:
+    def sound(self):
+        print("Meow")
+
+# Both classes have the same method sound()
+
+# But they behave differently.
+dog = Dog()
+cat = Cat()
+
+dog.sound()
+cat.sound()`,
+            output: `Woof
+Meow`,
+          },
+          {
+            type: 'code',
+            code: `class Car:
+    def start(self):
+        print("Car engine starts")
+
+class Bike:
+    def start(self):
+        print("Bike engine starts")
+
+# You can write one function:
+def start_vehicle(vehicle):
+    vehicle.start()
+
+car = Car()
+bike = Bike()
+
+start_vehicle(car)
+start_vehicle(bike)`,
+            output: `Car engine starts
+Bike engine starts`,
+          },
+          { type: 'markdown', text: 'Polymorphism with inheritance' },
+          {
+            type: 'code',
+            code: `class Animal:
+    def sound(self):
+        print("Some sound")
+
+
+class Dog(Animal):
+    def sound(self):
+        print("Woof")
+
+
+class Cat(Animal):
+    def sound(self):
+        print("Meow")
+
+animals = [Dog(), Cat(), Dog()]
+
+for animal in animals:
+    animal.sound()`,
+            output: `Woof
+Meow
+Woof`,
+          },
+        ],
+      },
+      {
+        slug: 'abstraction',
+        title: 'Abstraction',
+        cells: [
+          { type: 'markdown', text: `Hiding unnecessary implementation details and exposing only what is needed. 
+            
+            Think about an ATM:
+            You press: Withdraw ₹5,000
+            You don't need to know: How the bank checks your balance. How the transaction is processed. How the database is updated. How the money is released.
+            You only care about what the ATM can do, not how it does it.
+            That's abstraction.` },
+          {
+            type: 'code',
+            code: `from abc import ABC, abstractmethod # ABC means Abstract Base Class.
+
+class Animal(ABC): # means Animal is an abstract class.
+    @abstractmethod # defines a method that child classes are expected to implement.
+    def sound(self):
+        pass # means every child class must provide its own implementation of sound().
+
+class Dog(Animal):
+    def sound(self):
+        print("Woof")
+
+dog = Dog()
+
+dog.sound()
+# We focus on what an object should do, not how the parent implements it.`,
+            output: `Woof`,
+          },
+          { type: 'markdown', text: 'An abstract class is a class that acts as a blueprint for other classes.' },
+          {
+            type: 'markdown',
+            text: 'It defines what methods a child class must have, but may not provide the actual implementation.',
+          },
+          { type: 'markdown', text: 'Python uses the abc module for this.' },
+          {
+            type: 'code',
+            code: `# Why use abstract classes?
+# Imagine you're building a payment system.
+# Every payment method must have a pay() function.
+
+from abc import ABC, abstractmethod
+class Payment(ABC):
+
+    @abstractmethod
+    def pay(self, amount):
+        pass
+
+# Now different payment methods implement it differently:
+
+class UPI(Payment):
+    def pay(self, amount):
+        print(f"Paid ₹{amount} using UPI")
+
+class CreditCard(Payment):
+    def pay(self, amount):
+        print(f"Paid ₹{amount} using Credit Card")
+
+upi = UPI()
+card = CreditCard()
+
+upi.pay(500)
+card.pay(1000)
+
+
+# The abstract class basically establishes a contract:
+# Payment
+#   ↓
+# must have pay()
+#   ↓
+#  ┌───────┴────────┐
+#  ↓                ↓
+# UPI            CreditCard
+#  ↓                ↓
+# pay()           pay()`,
+            output: `Paid ₹500 using UPI
+Paid ₹1000 using Credit Card`,
+          },
+        ],
+      },
+      {
+        slug: 'encapsulation',
+        title: 'Encapsulation',
+        cells: [
+          {
+            type: 'markdown',
+            text: 'Encapsulation means bundling data and the methods that operate on that data inside a class, while controlling how that data is accessed or modified.',
+          },
+          {
+            type: 'code',
+            code: `class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+
+    def get_balance(self):
+        return self.__balance
+
+account = BankAccount(1000)
+account.deposit(500)
+print(account.get_balance())
+
+# __balance has two underscores before balance.
+# This is called a private attribute (more precisely, Python uses name mangling).`,
+            output: `1500`,
+          },
+          {
+            type: 'code',
+            code: `# If you had:
+
+class BankAccount:
+    def __init__(self, balance):
+        self.balance = balance
+
+# Someone could directly do:
+account.balance = -100000
+
+# There's nothing preventing it.
+# With self.__balance = balance we are saying this data should be accessed/modified through the class's methods rather than directly.`,
+          },
+          {
+            type: 'code',
+            code: `# What happens if you access it directly?
+
+account = BankAccount(1000)
+print(account.__balance)
+
+# You'll get an error such as AttributeError`,
+            output: `AttributeError                           Traceback (most recent call last)
+Cell In[7], line 4
+      1 # What happens if you access it directly?
+      2 
+      3 account = BankAccount(1000)
+----> 4 print(account.__balance)
+      5 
+      6 # You'll get an error such as AttributeError
+
+AttributeError: 'BankAccount' object has no attribute '__balance'`,
+          },
+          { type: 'markdown', text: "Three levels you'll see in Python" },
+          { type: 'markdown', text: 'Python commonly uses naming conventions for access control:' },
+          {
+            type: 'markdown',
+            text: '| Syntax | Meaning |\n|---|---|\n| `self.balance` | Public |\n| `self._balance` | Protected convention |\n| `self.__balance` | Private/name-mangled |',
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 /** Flat list of every note across every group, in sidebar order. */
