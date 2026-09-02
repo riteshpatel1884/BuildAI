@@ -10,7 +10,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white dark:border-white/10 dark:bg-[#18181b] transition-colors">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="text-lg font-bold text-zinc-900 dark:text-white">
-          BuildAI
+           <span style={{ fontFamily: 'var(--font-display)' }}>BuildAI</span>
         </Link>
 
         <div className="flex items-center gap-4">

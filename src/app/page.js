@@ -75,18 +75,28 @@ const waypoints = [
 
 const noteTopics = [
   { label: 'Python', slug: 'python' },
-  // { label: 'Transformers', slug: 'transformers' },
-  // { label: 'RAG Systems', slug: 'rag-systems' },
-  // { label: 'Vector Databases', slug: 'vector-databases' },
-  // { label: 'Fine-tuning', slug: 'fine-tuning' },
-  // { label: 'Prompt Techniques', slug: 'prompt-techniques' },
-  // { label: 'Evaluation & Metrics', slug: 'evaluation-metrics' },
-  // { label: 'AI Agents', slug: 'ai-agents' },
-  // { label: 'Model Deployment', slug: 'model-deployment' },
-  // { label: 'Tokenization', slug: 'tokenization' },
-  // { label: 'Embeddings', slug: 'embeddings' },
-  // { label: 'Context Windows', slug: 'context-windows' },
-  // { label: 'Model Serving', slug: 'model-serving' },
+  { label: 'Mathematics', slug: 'mathematics', comingSoon: true },
+  { label: 'Machine Learning', slug: 'machine-learning', comingSoon: true },
+   { label: 'pyTorch', slug: 'pytorch', comingSoon: true },
+  { label: 'Deep Learning', slug: 'deep-learning', comingSoon: true },
+  { label: 'Transformers', slug: 'transformers', comingSoon: true },
+  { label: 'LLM Fundamentals', slug: 'llm-fundamentals', comingSoon: true },
+  { label: 'Prompt + Context Engineering', slug: 'prompt-context-engineering', comingSoon: true },
+  { label: 'RAG', slug: 'rag', comingSoon: true },
+  { label: 'AI Agents', slug: 'ai-agents', comingSoon: true },
+  { label: 'MCP', slug: 'mcp', comingSoon: true },
+  { label: 'LLM Evaluation', slug: 'llm-evaluation', comingSoon: true },
+  { label: 'Production AI Engineering', slug: 'production-ai-engineering', comingSoon: true },
+  { label: 'Observability', slug: 'observability', comingSoon: true },
+  { label: 'Guardrails', slug: 'guardrails', comingSoon: true },
+  { label: 'AI Security', slug: 'ai-security', comingSoon: true },
+  { label: 'AI Governance / Responsible AI', slug: 'ai-governance-responsible-ai', comingSoon: true },
+  { label: 'AI Cost Optimization', slug: 'ai-cost-optimization', comingSoon: true },
+  { label: 'AI System Design', slug: 'ai-system-design', comingSoon: true },
+  { label: 'Reliability', slug: 'reliability', comingSoon: true },
+  { label: 'LLM Gateways', slug: 'llm-gateways', comingSoon: true },
+  { label: 'MLOps / LLMOps', slug: 'mlops-llmops', comingSoon: true },
+
 ];
 
 const features = [
@@ -142,14 +152,14 @@ export default function Home() {
           </p>
 
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            {/* <a
+            {/* 
               href="#roadmaps"
               className="w-full rounded-full bg-[#3654FF] px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-[#3654FF]/30 hover:bg-[#2946e0] transition-colors sm:w-auto"
             >
               Explore roadmaps
             </a> */}
-            <a
-              href="#notes"
+            
+            <a  href="#notes"
               className="w-full rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 transition-colors dark:border-white/20 dark:text-zinc-300 dark:hover:border-white/40 dark:hover:text-white sm:w-auto"
             >
               Browse notes
@@ -251,7 +261,7 @@ export default function Home() {
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {roadmapTracks.map((track) => (
-            <a
+            
               key={track.title}
               href="#"
               className="group relative flex flex-col rounded-2xl border border-zinc-200 bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-[#3654FF]/40 hover:shadow-lg hover:shadow-[#3654FF]/5 dark:border-white/10 dark:bg-white/[0.03] dark:hover:border-[#7C93FF]/40"
@@ -308,12 +318,30 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            {noteTopics.map(({ label, slug }) => (
-             <a key={slug}
-              href={`/${slug}`} className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:border-[#3654FF]/40 hover:text-[#3654FF] transition-colors dark:border-white/10 dark:bg-transparent dark:text-zinc-300 dark:hover:border-[#7C93FF]/40 dark:hover:text-[#7C93FF]">
-              {label}</a>
-            ))}
-          </div>
+  {noteTopics.map(({ label, slug, comingSoon }) =>
+    comingSoon ? (
+      <div key={slug} className="relative inline-flex">
+        <span className="cursor-not-allowed select-none rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-400 dark:border-white/10 dark:bg-transparent dark:text-zinc-600">
+          {label}
+        </span>
+        <span
+  className="absolute -top-2 -right-2 rounded-full border border-[#3654FF]/30 bg-[#3654FF]/10 px-1.5 py-[1px] text-[8px] font-semibold uppercase tracking-wide text-[#3654FF] dark:border-[#7C93FF]/30 dark:bg-[#7C93FF]/10 dark:text-[#7C93FF]"
+  style={{ fontFamily: 'var(--font-mono)' }}
+>
+  Soon
+</span>
+      </div>
+    ) : (
+      
+       <a key={slug}
+        href={`/${slug}`}
+        className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:border-[#3654FF]/40 hover:text-[#3654FF] transition-colors dark:border-white/10 dark:bg-transparent dark:text-zinc-300 dark:hover:border-[#7C93FF]/40 dark:hover:text-[#7C93FF]"
+      >
+        {label}
+      </a>
+    )
+  )}
+</div>
         </div>
       </section>
 
@@ -359,7 +387,7 @@ export default function Home() {
             <LogoMark small />
             <span style={{ fontFamily: 'var(--font-display)' }}>BuildAI</span>
           </div>
-          <p style={{ fontFamily: 'var(--font-mono)' }}>© {new Date().getFullYear()} BuildAI. All roadmaps, one place.</p>
+          <p style={{ fontFamily: 'var(--font-mono)' }}>© {new Date().getFullYear()} BuildAI. All AI Engineering notes, one place.</p>
         </div>
       </footer>
     </div>
@@ -408,4 +436,4 @@ function ArrowIcon() {
       <path d="M5 12h14M13 6l6 6-6 6" />
     </svg>
   );
-}
+}    
