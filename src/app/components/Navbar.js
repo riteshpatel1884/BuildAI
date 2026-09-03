@@ -34,12 +34,7 @@ export function Navbar() {
             )}
           </button>
 
-          <Link
-            href="/python"
-            className="rounded-full bg-[#3654FF] px-5 py-2 text-sm font-semibold text-white hover:bg-[#2946e0] transition-colors"
-          >
-            Start exploring
-          </Link>
+    
         </div>
       </div>
     </header>
