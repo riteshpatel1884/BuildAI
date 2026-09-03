@@ -46,6 +46,7 @@ const noteTopics = [
   { label: 'Prompt + Context Engineering', slug: 'prompt-context-engineering', comingSoon: true },
   { label: 'RAG', slug: 'rag', comingSoon: true },
   { label: 'AI Agents', slug: 'ai-agents', comingSoon: true },
+   { label: 'Deep Agents', slug: 'deep-agents'},
   { label: 'MCP', slug: 'mcp', comingSoon: true },
   { label: 'LLM Evaluation', slug: 'llm-evaluation', comingSoon: true },
   { label: 'Production AI Engineering', slug: 'production-ai-engineering', comingSoon: true },
