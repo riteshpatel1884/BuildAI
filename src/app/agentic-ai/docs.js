@@ -52,17 +52,17 @@ export const AGENTIC_AI = {
         branch: 'main',
       },
     },
-    // langgraph: {
-    //   label: 'LangGraph for AI Agents',
+    langgraph: {
+      label: 'LangGraph for AI Agents',
 
-    //   notes:
-    //     'https://docs.google.com/document/d/1u9M4G-Vn0VTTriemO--EsX03m9swiWK0BgwYWwHTrP4/edit?tab=t.kj44k2bd7n5f',
+      notes:
+        'https://docs.google.com/document/d/1u9M4G-Vn0VTTriemO--EsX03m9swiWK0BgwYWwHTrP4/edit?tab=t.kj44k2bd7n5f',
 
-    //   code: {
-    //     repo: 'riteshpatel1884/AI',
-    //     path: '21_Agentic_AI/03_langchain/',
-    //     branch: 'main',
-    //   },
-    // },
+      code: {
+        repo: 'riteshpatel1884/AI',
+        path: '21_Agentic_AI/09_LangGraph/',
+        branch: 'main',
+      },
+    },
   },
 };

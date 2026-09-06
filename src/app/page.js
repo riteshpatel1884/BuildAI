@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
 import { useTheme } from './ThemeProvider';
-import { Navbar } from './components/Navbar';
 
 /* ---------- Fonts ---------- */
 const spaceGrotesk = Space_Grotesk({
@@ -41,12 +40,12 @@ const noteTopics = [
   { label: 'Machine Learning', slug: 'machine-learning', comingSoon: true },
   { label: 'pyTorch', slug: 'pytorch', comingSoon: true },
   { label: 'Deep Learning', slug: 'deep-learning', comingSoon: true },
-  { label: 'Transformer', slug: 'transformer'},
+  { label: 'Transformer', slug: 'transformer' },
   { label: 'LLM Fundamentals', slug: 'llm-fundamentals', comingSoon: true },
   { label: 'Prompt + Context Engineering', slug: 'prompt-context-engineering', comingSoon: true },
   { label: 'RAG', slug: 'rag', comingSoon: true },
-  { label: 'Agentic AI', slug: 'agentic-ai'},
-  { label: 'Deep Agents', slug: 'deep-agent'},
+  { label: 'Agentic AI', slug: 'agentic-ai' },
+  { label: 'Deep Agents', slug: 'deep-agent' },
   { label: 'MCP', slug: 'mcp', comingSoon: true },
   { label: 'LLM Evaluation', slug: 'llm-evaluation', comingSoon: true },
   { label: 'Production AI Engineering', slug: 'production-ai-engineering', comingSoon: true },
@@ -79,7 +78,7 @@ const features = [
 /* ---------- Desktop-nudge modal (only ever opened on mobile) ---------- */
 function TopicModal({ topic, onClose, onContinue }) {
   useEffect(() => {
-    if (!topic) return; // don't touch scroll/listeners when the modal isn't open
+    if (!topic) return;
 
     function handleKey(e) {
       if (e.key === 'Escape') onClose();
@@ -103,7 +102,7 @@ function TopicModal({ topic, onClose, onContinue }) {
       <div
         role="dialog"
         aria-modal="true"
-        className="w-full max-w-sm rounded-2xl border border-zinc-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-zinc-900"
+        className="w-full max-w-sm rounded-3xl border border-zinc-200 bg-white p-6 shadow-2xl dark:border-white/10 dark:bg-zinc-900"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-[#3654FF]/10">
@@ -157,7 +156,6 @@ export default function Home() {
     if (isMobile) {
       setActiveTopic(topic);
     } else {
-      // Desktop: skip the popup entirely, go straight to the page
       window.location.href = `/${topic.slug}`;
     }
   }
@@ -171,64 +169,68 @@ export default function Home() {
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} min-h-screen bg-white text-zinc-900 antialiased dark:bg-zinc-900 dark:text-zinc-100 transition-colors duration-300`}
       style={{ fontFamily: 'var(--font-body)', visibility: mounted ? 'visible' : 'hidden' }}
     >
-      {/* ---------------- NAV ---------------- */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-zinc-900/80"></header>
 
       {/* ---------------- HERO ---------------- */}
-      <section className="relative overflow-hidden">
+      <section id="top" className="relative overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 -top-40 h-96 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(54,84,255,0.12),transparent)] dark:bg-[radial-gradient(60%_60%_at_50%_0%,rgba(124,147,255,0.14),transparent)]"
+          className="pointer-events-none absolute inset-x-0 -top-40 h-96 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(54,84,255,0.10),transparent)] dark:bg-[radial-gradient(60%_60%_at_50%_0%,rgba(124,147,255,0.12),transparent)]"
         />
 
-        <div className="relative mx-auto max-w-6xl px-6 pt-10 pb-10 text-center sm:pt-28">
+        <div className="relative mx-auto max-w-6xl px-6 pt-14 pb-10 text-center sm:pt-28">
+          <p
+            className="text-sm font-medium text-zinc-500 dark:text-zinc-400"
+            style={{ fontFamily: 'var(--font-mono)' }}
+          >
+            A learning path for AI engineering
+          </p>
+
           <h1
-            className="mx-auto max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl"
+            className="mx-auto mt-4 max-w-3xl text-4xl font-semibold leading-[1.12] tracking-tight sm:text-6xl"
             style={{ fontFamily: 'var(--font-display)' }}
           >
-            Stop hunting for <span className="text-[#3654FF]">notes.</span>
-            <br className="hidden sm:block" /> Start following the <span className="text-[#3654FF]">map.</span>
+            Stop hunting for <span className="text-[#3654FF] dark:text-[#7C93FF]">notes.</span>
+            <br className="hidden sm:block" /> Start following the{' '}
+            <span className="text-[#3654FF] dark:text-[#7C93FF]">map.</span>
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-lg">
-            Every roadmap, note, and resource for AI engineering - LLMs, RAG, fine-tuning,
-            agents, deployment - organized in one place instead of scattered across fifty
+            Every roadmap, note, and resource for AI engineering — LLMs, RAG, fine-tuning,
+            agents, deployment — organized in one place instead of scattered across fifty
             tabs and half-finished bookmarks.
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-8 flex justify-center">
             
             <a  href="#notes"
-              className="w-full rounded-full border border-zinc-300 px-6 py-3 text-sm font-semibold text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 transition-colors dark:border-white/20 dark:text-zinc-300 dark:hover:border-white/40 dark:hover:text-white sm:w-auto"
+              className="group inline-flex items-center gap-2 rounded-full bg-[#3654FF] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#2946e0]"
             >
               Browse notes
+              <ArrowIcon className="transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>
         </div>
 
         <div className="relative mx-auto mt-16 max-w-5xl px-6 pb-24">
-          {/* Desktop / tablet */}
-          <div className="hidden sm:flex flex-wrap items-end justify-center gap-x-3 gap-y-12">
-            {waypoints.map((label, i) => (
-              <div
-                key={label}
-                className="flex flex-col items-center"
-                style={{ transform: `translateY(${i % 2 === 0 ? '0px' : '18px'})`, minWidth: '7rem' }}
-              >
-                <div className="relative flex w-full items-center">
-                  {i !== 0 && (
-                    <span className="absolute right-1/2 h-px w-full border-t border-dashed border-zinc-300 dark:border-zinc-700" />
-                  )}
-                  <span className="relative mx-auto grid h-3 w-3 place-items-center rounded-full bg-[#FFB238] ring-4 ring-[#FFB238]/20" />
+          {/* Desktop / tablet — one continuous line, no zigzag */}
+          <div className="relative hidden sm:block">
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-[7px] h-px bg-gradient-to-r from-transparent via-zinc-300 to-transparent dark:via-zinc-700"
+            />
+            <div className="relative flex items-start justify-between">
+              {waypoints.map((label) => (
+                <div key={label} className="flex flex-1 flex-col items-center px-1">
+                  <span className="relative z-10 grid h-[15px] w-[15px] place-items-center rounded-full bg-[#FFB238] ring-4 ring-[#FFB238]/20" />
+                  <span
+                    className="mt-3 max-w-[7rem] text-center text-xs font-medium leading-snug text-zinc-600 dark:text-zinc-400"
+                    style={{ fontFamily: 'var(--font-mono)' }}
+                  >
+                    {label}
+                  </span>
                 </div>
-                <span
-                  className="mt-3 max-w-[7rem] text-center text-xs font-medium leading-snug text-zinc-600 dark:text-zinc-400"
-                  style={{ fontFamily: 'var(--font-mono)' }}
-                >
-                  {label}
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Mobile */}
@@ -252,49 +254,57 @@ export default function Home() {
       {/* ---------------- NOTES ---------------- */}
       <section id="notes" className="border-y border-zinc-200 bg-zinc-50 dark:border-white/10 dark:bg-white/[0.02]">
         <div className="mx-auto max-w-6xl px-6 py-24">
-          <div className="mb-12 max-w-xl">
-            <span
-              className="text-xs font-medium uppercase tracking-widest text-[#3654FF] dark:text-[#7C93FF]"
-              style={{ fontFamily: 'var(--font-mono)' }}
-            >
-              Notes
-            </span>
+          <div className="mb-10 max-w-xl">
             <h2
-              className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl"
+              className="text-3xl font-semibold tracking-tight sm:text-4xl"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               Notes that don&apos;t waste your time
             </h2>
             <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-              Short, dense, and linked back to the roadmap step they belong to. No fluff,
+              Short, dense, and ordered the way you&apos;d actually learn them — no fluff,
               no filler intros.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            {noteTopics.map((topic) =>
-              topic.comingSoon ? (
-                <div key={topic.slug} className="relative inline-flex">
-                  <span className="cursor-not-allowed select-none rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-400 dark:border-white/10 dark:bg-transparent dark:text-zinc-600">
-                    {topic.label}
-                  </span>
-                  <span
-                    className="absolute -top-2 -right-2 rounded-full border border-[#3654FF]/30 bg-[#3654FF]/10 px-1.5 py-[1px] text-[8px] font-semibold uppercase tracking-wide text-[#3654FF] dark:border-[#7C93FF]/30 dark:bg-[#7C93FF]/10 dark:text-[#7C93FF]"
-                    style={{ fontFamily: 'var(--font-mono)' }}
-                  >
-                    Soon
-                  </span>
-                </div>
-              ) : (
-                <button
-                  key={topic.slug}
-                  onClick={() => handleTopicClick(topic)}
-                  className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-700 hover:border-[#3654FF]/40 hover:text-[#3654FF] transition-colors dark:border-white/10 dark:bg-transparent dark:text-zinc-300 dark:hover:border-[#7C93FF]/40 dark:hover:text-[#7C93FF]"
-                >
-                  {topic.label}
-                </button>
-              )
-            )}
+          <div className="columns-1 sm:columns-2 sm:gap-x-12">
+            <ol className="divide-y divide-zinc-200 dark:divide-white/10">
+              {noteTopics.map((topic, i) => (
+                <li key={topic.slug} className="break-inside-avoid">
+                  {topic.comingSoon ? (
+                    <div className="flex items-center justify-between gap-4 py-3.5 text-zinc-400 dark:text-zinc-600">
+                      <span className="flex items-center gap-4">
+                        <span className="text-xs tabular-nums" style={{ fontFamily: 'var(--font-mono)' }}>
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span className="text-sm font-medium">{topic.label}</span>
+                      </span>
+                      <span className="text-xs" style={{ fontFamily: 'var(--font-mono)' }}>
+                        Soon
+                      </span>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => handleTopicClick(topic)}
+                      className="group flex w-full items-center justify-between gap-4 py-3.5 text-left"
+                    >
+                      <span className="flex items-center gap-4">
+                        <span
+                          className="text-xs tabular-nums text-[#3654FF] dark:text-[#7C93FF]"
+                          style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span className="text-sm font-medium text-zinc-800 transition-colors group-hover:text-[#3654FF] dark:text-zinc-200 dark:group-hover:text-[#7C93FF]">
+                          {topic.label}
+                        </span>
+                      </span>
+                      <ArrowIcon className="text-zinc-300 transition-all group-hover:translate-x-0.5 group-hover:text-[#3654FF] dark:text-zinc-700 dark:group-hover:text-[#7C93FF]" />
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
@@ -302,28 +312,19 @@ export default function Home() {
       {/* ---------------- WHY ---------------- */}
       <section id="why" className="mx-auto max-w-6xl px-6 py-24">
         <div className="mb-12 max-w-xl">
-          <span
-            className="text-xs font-medium uppercase tracking-widest text-[#3654FF] dark:text-[#7C93FF]"
-            style={{ fontFamily: 'var(--font-mono)' }}
-          >
-            Why BuildAI
-          </span>
           <h2
-            className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl"
+            className="text-3xl font-semibold tracking-tight sm:text-4xl"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             Built for people actually learning this stuff
           </h2>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-3">
+        <div className="grid divide-y divide-zinc-200 dark:divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {features.map((f) => (
-            <div key={f.title}>
-              <div className="h-1 w-8 rounded-full bg-[#FFB238]" />
-              <h3
-                className="mt-4 text-lg font-semibold"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
+            <div key={f.title} className="py-6 first:pt-0 sm:px-8 sm:py-0 sm:first:pl-0 sm:last:pr-0">
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#FFB238]" />
+              <h3 className="mt-4 text-lg font-semibold" style={{ fontFamily: 'var(--font-display)' }}>
                 {f.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
@@ -401,9 +402,19 @@ function MoonIcon() {
   );
 }
 
-function ArrowIcon() {
+function ArrowIcon({ className = '' }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
       <path d="M5 12h14M13 6l6 6-6 6" />
     </svg>
   );
