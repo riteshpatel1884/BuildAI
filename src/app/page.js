@@ -41,6 +41,7 @@ const noteTopics = [
   { label: 'pyTorch', slug: 'pytorch', comingSoon: true },
   { label: 'Deep Learning', slug: 'deep-learning', comingSoon: true },
   { label: 'Transformer', slug: 'transformer' },
+  { label: 'LangChain', slug: 'langchain' },
   { label: 'LLM Fundamentals', slug: 'llm-fundamentals', comingSoon: true },
   { label: 'Prompt + Context Engineering', slug: 'prompt-context-engineering', comingSoon: true },
   { label: 'RAG', slug: 'rag', comingSoon: true },
