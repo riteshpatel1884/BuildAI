@@ -64,5 +64,17 @@ export const AGENTIC_AI = {
         branch: 'main',
       },
     },
+    persistence: {
+      label: 'Persistence ',
+
+      notes:
+        'https://docs.google.com/document/d/1u9M4G-Vn0VTTriemO--EsX03m9swiWK0BgwYWwHTrP4/edit?tab=t.jhxi4les5t6v',
+
+      code: {
+        repo: 'riteshpatel1884/AI',
+        path: '21_Agentic_AI/09_LangGraph/05_persistence',
+        branch: 'main',
+      },
+    },
   },
 };

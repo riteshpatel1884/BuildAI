@@ -42,7 +42,7 @@ const noteTopics = [
   { label: 'Deep Learning', slug: 'deep-learning', comingSoon: true },
   { label: 'Transformer', slug: 'transformer' },
   { label: 'LangChain', slug: 'langchain' },
-  { label: 'LLM Fundamentals', slug: 'llm-fundamentals', comingSoon: true },
+  { label: 'LLMs', slug: 'llm'},
   { label: 'Prompt + Context Engineering', slug: 'prompt-context-engineering', comingSoon: true },
   { label: 'RAG', slug: 'rag', comingSoon: true },
   { label: 'Agentic AI', slug: 'agentic-ai' },
