@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { NotesSidebar } from './Notessidebar';
 
-export default function TransformerLayout({ children }) {
+export default function LLMLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
