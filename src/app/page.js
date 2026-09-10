@@ -48,6 +48,7 @@ const noteTopics = [
   { label: 'Agentic AI', slug: 'agentic-ai' },
   { label: 'Deep Agents', slug: 'deep-agent' },
   { label: 'MCP', slug: 'mcp', comingSoon: true },
+  { label: 'LangSmith', slug: 'langsmith'},
   { label: 'LLM Evaluation', slug: 'llm-evaluation', comingSoon: true },
   { label: 'Production AI Engineering', slug: 'production-ai-engineering', comingSoon: true },
   { label: 'Observability', slug: 'observability', comingSoon: true },

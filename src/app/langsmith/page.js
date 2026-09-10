@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 // converted to the /preview form — /edit URLs won't embed for viewers
 // without edit access, /preview will.
 const DOC_EMBED_URL =
-  'https://docs.google.com/document/d/1u9M4G-Vn0VTTriemO--EsX03m9swiWK0BgwYWwHTrP4/edit?tab=t.0';
+  'https://docs.google.com/document/d/1u9M4G-Vn0VTTriemO--EsX03m9swiWK0BgwYWwHTrP4/edit?tab=t.5bf4bkqyjncv';
 
-export default function LLMDocsPage() {
+export default function TransformerDocsPage() {
   const [showMobileWarning, setShowMobileWarning] = useState(false);
 
   useEffect(() => {
