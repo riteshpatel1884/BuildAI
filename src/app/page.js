@@ -37,7 +37,7 @@ const waypoints = [
 const noteTopics = [
   { label: 'Python', slug: 'python' },
   { label: 'Mathematics', slug: 'mathematics', comingSoon: true },
-  { label: 'Machine Learning', slug: 'machine-learning', comingSoon: true },
+  { label: 'Machine Learning', slug: 'machine-learning'},
   { label: 'pyTorch', slug: 'pytorch', comingSoon: true },
   { label: 'Deep Learning', slug: 'deep-learning', comingSoon: true },
   { label: 'Transformer', slug: 'transformer' },
