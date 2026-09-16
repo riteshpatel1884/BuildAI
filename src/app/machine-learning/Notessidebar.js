@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { AGENTIC_AI } from './docs';
+import { MACHINE_LEARNING } from './docs';
 
 const MIN_WIDTH = 200;
 const MAX_WIDTH = 480;
@@ -113,12 +113,12 @@ export function NotesSidebar({ open, onToggle }) {
               ].join(' ')}
             >
               <DocIcon />
-              <span className="truncate">{AGENTIC_AI.title}</span>
+              <span className="truncate">{MACHINE_LEARNING.title}</span>
             </div>
 
             <div className="ml-3 mt-0.5 flex flex-col gap-0.5 border-l border-zinc-200 pl-2 dark:border-white/10">
-              {Object.entries(AGENTIC_AI.subtopics).map(([subSlug, subtopic]) => {
-                const subHref = `/agentic-ai/${subSlug}`;
+              {Object.entries(MACHINE_LEARNING.subtopics).map(([subSlug, subtopic]) => {
+                const subHref = `/machine-learning/${subSlug}`;
                 const subActive =
                   pathname === subHref || pathname?.startsWith(`${subHref}/`);
 
