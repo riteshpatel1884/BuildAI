@@ -2,7 +2,7 @@ export const MACHINE_LEARNING = {
   title: 'Machine Learning',
 
   subtopics: {
-    linear: {
+    'linear-regression': {
       label: 'Linear Regression',
 
       notes:
