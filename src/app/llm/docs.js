@@ -20,5 +20,11 @@ export const LLM = {
       notes:
         'https://docs.google.com/document/d/1u9M4G-Vn0VTTriemO--EsX03m9swiWK0BgwYWwHTrP4/edit?tab=t.7likehm3vtto',
     },
+    temperature : {
+      label: 'Temperature',
+
+      notes:
+        'https://docs.google.com/document/d/1u9M4G-Vn0VTTriemO--EsX03m9swiWK0BgwYWwHTrP4/edit?tab=t.e8tksp4g3jm',
+    },
   },
 };
